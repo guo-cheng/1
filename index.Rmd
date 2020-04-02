@@ -1,0 +1,182 @@
+---
+title: "Your title"
+output:
+  html_document:
+    css: style.css
+    code_folding: "hide"
+    includes:
+      after_body: footer.html
+      before_body: header.html
+    number_sections: yes
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+knitr::opts_chunk$set(fig.width = 6, collapse = TRUE)
+knitr::opts_chunk$set(message = FALSE,warning = FALSE)
+```
+`在 YAML 文件中用 number_sections: TRUE 参数设置自动编号：`
+
+# Title
+## A subtitle
+## Another subtitle
+
+# Another title
+
+
+`可以用 html 中的 <br> 标签来插入换行符。`
+
+A first sentence
+<br><br><br><br>
+A seconde sentence
+
+`同样可以用 html 代码居中图片`
+
+<center>
+![FigName](palma-4902795_1920.jpg)
+</center>
+
+`有时候 R 代码生成的图片周围有太多空白，这时可以用 fig.asp 参数来调整`
+
+```{r,fig.asp=0.50}
+library(png)
+library(grid)
+img <- readPNG("Snipaste_2020-03-04_20-36-21.png")
+grid.raster(img)
+```
+
+`添加 footer 和 header`
+`我们也可以在文档的开头或结尾添加一些 html 代码`
+
+`在标题前加上空行`
+`除了在每个标题前加上 <br> 外，更方便的办法是直接在 .css 文件中添加样式。创建一个 style.css 文件`
+
+A title will follow, but with a lot of space before it
+
+# Title 1
+
+content of part 1
+
+# Title 2
+
+content of part 2
+
+`可以在代码块的 header 中添加图注`
+
+```{r, fig.align="center", fig.width=6, fig.height=6, fig.cap="Figure: Here is a really important caption."}
+
+library(tidyverse)
+mpg %>%
+  ggplot( aes(x=reorder(class, hwy), y=hwy, fill=class)) + 
+    geom_boxplot() +
+    xlab("class") +
+    theme(legend.position="none")
+
+```
+
+`在 R Markdown 中可以用 LaTeX 语法插入数学公式，用 $ 分隔 Latex 语法：`
+
+$A = (\pi * \lambda \times r^{4}) / \alpha $
+
+
+
+
+`并排放两张图`
+```{r out.width=c('50%', '50%'), fig.show='hold'}
+boxplot(1:10)
+plot(rnorm(10))
+```
+
+`为子标题实现选项卡切换的效果`
+
+
+# Use buttons or tabs for sub-chapters {.tabset .tabset-fade .tabset-pills}
+***
+Save space in your document using buttons or tabs for sub chapters. Add this code at the end of your title:
+
+## First
+A first section
+
+## Second
+content of sub-chapter #2
+
+## Third
+content of sub-chapter #3
+
+
+`用 DT 包来展示表格`
+
+```{r}
+library(DT)
+datatable(mtcars, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+`隐藏代码`
+
+
+`高亮一段话`
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+- This is my first conclusion
+- This is my second conclusion
+
+</div>
+
+`视差滚动`
+
+
+`内部链接`
+<http://tholman.com/github-corners/>
+
+`第一步 - 在标题处添加一个锚点：`
+
+# Add a github link in the corner of your document {#github-link}
+
+`第二步 - 用链接指向该锚点：`
+
+For example, [this link](#github-link) will bring ...
+
+
+`交互式图表`
+
+
+```{r}
+library(ggplot2)
+library(plotly)
+library(gapminder)
+
+p <- gapminder %>%
+  filter(year==1977) %>%
+  ggplot( aes(gdpPercap, lifeExp, size = pop, color=continent)) +
+  geom_point() +
+  scale_x_log10() +
+  theme_bw()
+
+ggplotly(p)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
